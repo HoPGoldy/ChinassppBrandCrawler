@@ -1,8 +1,11 @@
-#ChinassppBrandCrawler介绍
-
+ChinassppBrandCrawler
+====
+介绍
+----
 用于爬取网站 http://www.chinasspp.com/ 上的品牌数据，目前支持爬取全部品牌和女装分类
 
-#安装与使用
+安装与使用
+----
 1. **安装依赖**
 	cd 到文件跟目录下后键入：
 	
@@ -13,7 +16,8 @@
 
 	python BrandCrawler.py
 
-## getBrand方法
+getBrand方法
+----
 **getBrand( minPageNum, maxPageNum, brandType = '全部', excelName = '品牌介绍')**
 参数：
 	1. **minPageNum**: 需要爬取的最小页码
