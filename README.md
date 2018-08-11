@@ -19,6 +19,7 @@ ChinassppBrandCrawler
 getBrand方法
 ----
 **getBrand( minPageNum, maxPageNum, brandType = '全部', excelName = '品牌介绍')**
+
 参数：
 1. **minPageNum**: 需要爬取的最小页码
  
