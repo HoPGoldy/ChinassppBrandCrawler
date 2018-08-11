@@ -1,11 +1,12 @@
 #ChinassppBrandCrawler介绍
-用于爬取网站http://www.chinasspp.com/上的品牌数据，目前支持爬取全部品牌和女装分类
+
+用于爬取网站 http://www.chinasspp.com/ 上的品牌数据，目前支持爬取全部品牌和女装分类
 
 #安装与使用
 1. **安装依赖**
 	cd 到文件跟目录下后键入：
 	
-	pip install -r requirements.txt
+	pip3 install -r requirements.txt
 2. **设置参数**
 参考下文修改BrandCrawler.py中getBrand方法的参数来确定需要爬取的数据
 3. **启动**
