@@ -1,7 +1,10 @@
+
 #ChinassppBrandCrawler介绍
+
 用于爬取网站http://www.chinasspp.com/上的品牌数据，目前支持爬取全部品牌和女装分类
 
 #安装与使用
+
 1. **安装依赖**
 	cd 到文件跟目录下后键入：
 	

@@ -3,6 +3,8 @@ from lxml import etree
 import re 
 
 class Chinasspp():
+    _session = None
+
     _baseUrl = 'http://www.chinasspp.com/brand/brands.html'
     _ladiesPageUrl = 'http://www.chinasspp.com/brand/%E5%A5%B3%E8%A3%85%E5%93%81%E7%89%8C/'
     _MainPageSourceReg = '(?<=/span><h1>品牌大全</h1></div>)[\s\S]*(?=p id="l_page" class="pagination">)'
@@ -13,8 +15,15 @@ class Chinasspp():
     _itemIntroduceXpath = '//*[@id="container"]/div[4]/div/p/text()'
     _itemIntroduceSpareXpath = '//*[@id="container"]/div[3]/div/p/text()'
 
+    def __init__(self):
+        session = requests.session()
+        session.keep_alive = False
+
+        self._session = session
+
+
     def getPageItems(self, pageNum = 1):
-        response = requests.get(f'http://www.chinasspp.com/brand/brands-{pageNum}.html')
+        response = self._session.get(f'http://www.chinasspp.com/brand/brands-{pageNum}.html')
         #print(response.text)
         mainSource = self._getDataByRegular(response.text, self._MainPageSourceReg)
         result = self._getDataByRegular(mainSource[0], self._ItemsUrlReg)
@@ -22,7 +31,7 @@ class Chinasspp():
         return result
 
     def getLadiesPageItems(self, pageNum = 1):
-        response = requests.get(f'http://www.chinasspp.com/brand/%E5%A5%B3%E8%A3%85%E5%93%81%E7%89%8C/{pageNum}/')
+        response = self._session.get(f'http://www.chinasspp.com/brand/%E5%A5%B3%E8%A3%85%E5%93%81%E7%89%8C/{pageNum}/')
         #print(response.text)
         mainSource = self._getDataByRegular(response.text, self._ladiesMainPageSourceReg)
         result = self._getDataByRegular(mainSource[0], self._ItemsUrlReg)
@@ -31,25 +40,32 @@ class Chinasspp():
         
 
     def getItemInfo(self, url):
-        response = requests.get(url)
-        #print(response.text)
-        name = self._getDataByXpath(response.text, self._itemNameXpath)[0]
-        name = name.replace(' 品牌简介', '')
-        name = name.replace(' 品牌动态', '')
-        introduceTemp = self._getDataByXpath(response.text, self._itemIntroduceXpath)
+        try:
+            response = self._session.get(url)
+            #print(response.text)
+            name = self._getDataByXpath(response.text, self._itemNameXpath)[0]
+            name = name.replace(' 品牌简介', '')
+            name = name.replace(' 品牌动态', '')
+            introduceTemp = self._getDataByXpath(response.text, self._itemIntroduceXpath)
 
-        introduce = ''
-        if len(introduceTemp) == 0:
-            for sentence in self._getDataByXpath(response.text, self._itemIntroduceSpareXpath):
-                introduce += sentence
-        else:
-            for sentence in introduceTemp:
-                introduce += sentence
+            introduce = ''
+            if len(introduceTemp) == 0:
+                for sentence in self._getDataByXpath(response.text, self._itemIntroduceSpareXpath):
+                    introduce += sentence
+            else:
+                for sentence in introduceTemp:
+                    introduce += sentence
 
-        return {
-            'name': name.replace(' 品牌介绍', ''),
-            'introduce': introduce
-            }
+            return {
+                'name': name.replace(' 品牌介绍', ''),
+                'introduce': introduce
+                }
+        except requests.exceptions.ConnectionError:
+            return {
+                'name': '查询失败',
+                'introduce': '查询失败'
+                }
+        
 
 
     def _getDataByRegular(self, pageSource, RegularString):

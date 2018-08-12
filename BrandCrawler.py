@@ -44,5 +44,5 @@ def getBrand(minPageNum, maxPageNum,brandType = '全部', excelName = '品牌介
 
 
 if __name__ == '__main__':
-    getBrand(minPageNum = 1, maxPageNum = 50, brandType = '女装', excelName = '女装品牌介绍')
+    getBrand(minPageNum = 279, maxPageNum = 300, brandType = '女装', excelName = '女装品牌介绍4')
 
