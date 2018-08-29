@@ -20,37 +20,33 @@ ChinassppBrandCrawler
 Chinasspp类提供的方法
 ----
 
-1. **searchBrand(brandName)**
+1. **searchBrand (brandName)**
 
 	参数：
-
 	**brandName**: 搜索的品牌名
 
 	返回值：
 	**list**类型 元素为包含了搜索到的品牌名称和介绍的字典
 
-2. **getPageItems(pageNum)**
+2. **getPageItems (pageNum)**
 
 	参数：
-
 	**pageNum**: 想要爬取的页数
 
 	返回值：
 	**list**类型 元素为该页所包含的品牌url
 	
-3. **getLadiesPageItems(pageNum)**
+3. **getLadiesPageItems (pageNum)**
 
 	参数：
-
 	**pageNum**: 想要爬取的页数，目标是女装品牌
 
 	返回值：
 	**list**类型 元素为该页所包含的品牌url
 	
-4. **getItemInfo(url)**
+4. **getItemInfo (url)**
 
 	参数：
-
 	**url**: chinasspp的品牌详情页
 
 	返回值：
