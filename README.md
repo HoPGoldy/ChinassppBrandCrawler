@@ -16,15 +16,23 @@ ChinassppBrandCrawler
 
 	```python example.py```
 
-getBrand方法
+
+Chinasspp类提供的方法
 ----
-**getBrand( minPageNum, maxPageNum, brandType = '全部', excelName = '品牌介绍')**
+1. **searchBrand(brandName):
 
 参数：
-1. **minPageNum**: 需要爬取的最小页码
- 
-2. **maxPageNum**: 需要爬取的最大页码
-  
-3. **brandType**： 需要爬取的品牌类型，目前支持“全部”以及"女装"，输入未知类型则爬取全部
-		
-4. **excelName**： 保存输入的excel文件名
+
+**brandName**: 搜索的品牌名
+
+返回值：
+**list**类型 元素为包含了搜索到的品牌名称和介绍的字典
+
+2. **getPageItems(pageNum)**
+
+参数：
+
+**pageNum**: 想要爬取的页数
+
+返回值：
+**list**类型 元素为该页所包含的品牌url
