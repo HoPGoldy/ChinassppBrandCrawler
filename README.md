@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-
-#ChinassppBrandCrawler介绍
-
-用于爬取网站http://www.chinasspp.com/上的品牌数据，目前支持爬取全部品牌和女装分类
-
-#安装与使用
-
-=======
 ChinassppBrandCrawler
 ====
 介绍
@@ -15,16 +6,15 @@ ChinassppBrandCrawler
 
 安装与使用
 ----
->>>>>>> 3bf5bfbd9414ffa79f9311283e49497706877063
 1. **安装依赖**
 	cd 到文件跟目录下后键入：
 	
-	pip3 install -r requirements.txt
-2. **设置参数**
-参考下文修改BrandCrawler.py中getBrand方法的参数来确定需要爬取的数据
-3. **启动**
+	```pip3 install -r requirements.txt```
+3. **启动测试用例**
 
-	python BrandCrawler.py
+	测试用例会在chinasspp上搜索ZARA的品牌介绍并返回
+
+	```python example.py```
 
 getBrand方法
 ----
