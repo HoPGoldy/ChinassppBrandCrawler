@@ -19,7 +19,8 @@ ChinassppBrandCrawler
 
 Chinasspp类提供的方法
 ----
-1. **searchBrand(brandName):
+
+1. **searchBrand(brandName)**
 
 	参数：
 
