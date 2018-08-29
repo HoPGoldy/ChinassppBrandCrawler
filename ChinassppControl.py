@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2018/8/29 19:11
+# @Author  : HoPGoldy
+
 import requests
 from lxml import etree
-import re 
+import re
+
 
 class Chinasspp():
     _session = None
@@ -21,28 +26,47 @@ class Chinasspp():
 
         self._session = session
 
+    def searchBrand(self, brandName):
+        response = self._session.get(f'http://www.chinasspp.com/brand/bsearch.aspx?key={brandName}&cid=&s_btn=%CB%D1+%CB%F7')
+        mainSource = self._getDataByRegular(response.text, self._MainPageSourceReg)
+        if mainSource is None or len(mainSource) == 0:
+            print('未找到该品牌')
+            return None
 
-    def getPageItems(self, pageNum = 1):
+        brandUrls = self._getDataByRegular(mainSource[0], self._ItemsUrlReg)
+
+        if brandUrls is None or len(brandUrls) == 0:
+            print('未发现该品牌')
+            return None
+
+        result = []
+        for url in brandUrls:
+            info = self.getItemInfo(url)
+            if '查询失败' not in info['name']:
+                result.append(info)
+
+        return result
+
+    def getPageItems(self, pageNum=1):
         response = self._session.get(f'http://www.chinasspp.com/brand/brands-{pageNum}.html')
-        #print(response.text)
+        # print(response.text)
         mainSource = self._getDataByRegular(response.text, self._MainPageSourceReg)
         result = self._getDataByRegular(mainSource[0], self._ItemsUrlReg)
-        
+
         return result
 
-    def getLadiesPageItems(self, pageNum = 1):
+    def getLadiesPageItems(self, pageNum=1):
         response = self._session.get(f'http://www.chinasspp.com/brand/%E5%A5%B3%E8%A3%85%E5%93%81%E7%89%8C/{pageNum}/')
-        #print(response.text)
+        # print(response.text)
         mainSource = self._getDataByRegular(response.text, self._ladiesMainPageSourceReg)
         result = self._getDataByRegular(mainSource[0], self._ItemsUrlReg)
-        
+
         return result
-        
 
     def getItemInfo(self, url):
         try:
             response = self._session.get(url)
-            #print(response.text)
+            # print(response.text)
             name = self._getDataByXpath(response.text, self._itemNameXpath)[0]
             name = name.replace(' 品牌简介', '')
             name = name.replace(' 品牌动态', '')
@@ -59,19 +83,17 @@ class Chinasspp():
             return {
                 'name': name.replace(' 品牌介绍', ''),
                 'introduce': introduce
-                }
+            }
         except requests.exceptions.ConnectionError:
             return {
                 'name': '查询失败',
                 'introduce': '查询失败'
-                }
-        
-
+            }
 
     def _getDataByRegular(self, pageSource, RegularString):
         result = re.findall(RegularString, pageSource)
         dedupResult = list(set(result))
-        dedupResult.sort(key = result.index)
+        dedupResult.sort(key=result.index)
         return dedupResult
 
     def _getDataByXpath(self, pageSource, xpath):
