@@ -2,7 +2,7 @@ ChinassppBrandCrawler
 ====
 介绍
 ----
-用于爬取网站 http://www.chinasspp.com/ 上的品牌数据，目前支持爬取全部品牌和女装分类
+用于爬取网站 http://www.chinasspp.com/ 上的品牌数据，目前支持爬取全部品牌和女装分类以及查询指定品牌
 
 安装与使用
 ----
@@ -26,7 +26,7 @@ Chinasspp类提供的方法
 	**brandName**: 搜索的品牌名
 
 	返回值：
-	**list**类型 元素为包含了搜索到的品牌名称和介绍的字典
+	**list**类型 元素为包含了搜索到的品牌名称、介绍和logo的字典
 
 2. **getPageItems (pageNum)**
 
