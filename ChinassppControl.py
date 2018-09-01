@@ -19,6 +19,7 @@ class Chinasspp():
     _itemNameXpath = '//*[@id="container"]/div[4]/h2/strong/text()'
     _itemIntroduceXpath = '//*[@id="container"]/div[4]/div/p/text()'
     _itemIntroduceSpareXpath = '//*[@id="container"]/div[3]/div/p/text()'
+    _brandLogoXpath = '//*[@id="container"]/div[2]/div[1]/p[1]/img/@src'
 
     def __init__(self):
         session = requests.session()
@@ -71,6 +72,7 @@ class Chinasspp():
             name = name.replace(' 品牌简介', '')
             name = name.replace(' 品牌动态', '')
             introduceTemp = self._getDataByXpath(response.text, self._itemIntroduceXpath)
+            logo = self._getDataByXpath(response.text, self._brandLogoXpath)
 
             introduce = ''
             if len(introduceTemp) == 0:
@@ -82,12 +84,14 @@ class Chinasspp():
 
             return {
                 'name': name.replace(' 品牌介绍', ''),
-                'introduce': introduce
+                'introduce': introduce,
+                'logo': logo
             }
         except requests.exceptions.ConnectionError:
             return {
                 'name': '查询失败',
-                'introduce': '查询失败'
+                'introduce': '查询失败',
+                'logo': '查询失败'
             }
 
     def _getDataByRegular(self, pageSource, RegularString):
