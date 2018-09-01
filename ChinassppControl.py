@@ -73,6 +73,10 @@ class Chinasspp():
             name = name.replace(' 品牌动态', '')
             introduceTemp = self._getDataByXpath(response.text, self._itemIntroduceXpath)
             logo = self._getDataByXpath(response.text, self._brandLogoXpath)
+            if len(logo) != 0:
+                logo = logo[0]
+            else:
+                logo = ''
 
             introduce = ''
             if len(introduceTemp) == 0:
